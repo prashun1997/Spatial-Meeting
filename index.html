@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Spatial Teams Meeting</title>
+    <link rel="manifest" href="manifest.json" />
+    <script type="text/javascript" src="voxeet-sdk.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/@dolbyio/comms-sdk-web-extensions@1.0.1/dist/voxeet-sdk-ext.js"
+        integrity="sha256-aTb5L3Zf4QXKsSlNSAjDxOMvIkZmqXfoULtWXSgYMwY="
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.2/css/bootstrap.min.css"
+        integrity="sha512-SCpMC7NhtrwHpzwKlE1l6ks0rS+GbMJJpoQw/A742VaxdGcQKqVD8F/y/m9WLOfIPppy7mWIs/kS0bKgSI0Bfw=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer" />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"
+        integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer" />
+    <link rel="stylesheet"
+        href="styles.css">
+</head>
+
+<body>
+    <main>
+        <div id="private-zone" class="background-border-private-zone hide">
+            <p>
+                Private zone<br/>
+                <small id="private-zone-description">You can only hear users in this zone and users outside can't hear you.</small>
+            </p>
+        </div>
+        <div class="background-border-container-a"></div>
+        <div class="background-border-container-b"></div>
+        <img id="spatialaudio-logo" src="images/spatialaudio.png" />
+        <div id="users-container" class="main-container"></div>
+    </main>
+
+    <div class="overlay"></div>
+
+        <button id="btn-settings" class="btn btn-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+            <img src="images/settings.png" />
+        </button>
+
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header">
+                <h5 id="offcanvasRightLabel">Spatial Teams Meeting</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="d-grid gap-2">
+                    <button id="btn-invitation" type="button" class="btn btn-success">Invite someone</button>
+                    <button id="btn-video-on" type="button" class="btn btn-primary d-none hide-for-demo">Video On</button>
+                    <button id="btn-video-off" type="button" class="btn btn-secondary d-none hide-for-demo">Video Off</button>
+                    <button id="btn-unmute" type="button" class="btn btn-primary d-none">Unmute</button>
+                    <button id="btn-mute" type="button" class="btn btn-secondary d-none">Mute</button>
+                </div>
+
+                <div class="d-grid gap-2 border-top mt-3">
+                    <button id="btn-exit" type="button" class="btn btn-danger">Exit</button>
+                </div>
+
+                <!-- Video Devices -->
+                <div class="d-grid gap-2 border-top mt-3 hide-for-demo">
+                    <label for="video-devices" class="col-form-label">Video Devices:</label>
+                    <select id="video-devices" class="custom-select"></select>
+                    <button id="btn-set-video-device" class="btn btn-info" type="button" disabled>Set</button>
+                </div>
+        
+                <!-- Input Audio Devices -->
+                <div class="d-grid gap-2 border-top mt-3">
+                    <label for="input-audio-devices" class="col-form-label">Input Audio Devices:</label>
+                    <select id="input-audio-devices" class="custom-select"></select>
+                    <button id="btn-set-input-audio-device" class="btn btn-info" type="button" disabled>Set</button>
+                </div>
+        
+                <!-- Output Audio Devices -->
+                <div class="d-grid gap-2 border-top mt-3 hide-safari">
+                    <label for="output-audio-devices" class="col-form-label">Output Audio Devices:</label>
+                    <select id="output-audio-devices" class="custom-select"></select>
+                    <button id="btn-set-output-audio-device" class="btn btn-info" type="button" disabled>Set</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="error-modal" class="modal modal-error" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Spatial Teams Meeting</h5>
+                    An error happened...
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3" style="text-align: center;">
+                        <img src="images/siren.png" style="height: 96px;">
+                    </div>
+                    <div class="mb-3">
+                        <span id="error-message"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="init-modal" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Spatial Teams Meeting</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="input-access-token" class="form-label">Provide a Client Access Token:</label>
+                        <textarea id="input-access-token" class="form-control" style="resize: none;" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btn-initialize" type="button" class="btn btn-primary">Initialize the SDK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="invitation-modal" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Dolby.io Spatial Audio - Invitation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="mb-3">
+                                Copy the link below and share it with someone to join you in the conference. The link will expire on <span id="span-link-expiration" style="font-style: italic;"></span>.
+                            </div>
+                            <div class="mb-3" style="text-align: center;">
+                                <textarea id="input-invitation-link" class="form-control" style="resize: none;" rows="3" readonly></textarea>
+                                <div class="valid-feedback">
+                                    Copied to clipboard, now share the link with someone.
+                                </div>
+                            </div>
+                            <div class="mb-3 d-grid">
+                                <button id="btn-copy-invitation" type="button" class="btn btn-primary">Copy to clipboard</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="login-modal" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Spatial Teams Meeting</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    Experience the Spatial Audio demo with a wired headset
+                                </div>
+                                <div class="mb-3" style="text-align: center;">
+                                    <img src="images/earphone.png" style="height: 96px;">
+                                </div>
+                                <div class="mb-3 d-grid">
+                                    <button id="btn-demo" type="button" class="btn btn-primary">Join demo</button>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label for="input-conference-alias" class="form-label">or join the conference:</label>
+                                    <input id="input-conference-alias" type="text" class="form-control" placeholder="Conference alias" value="spatial-demo">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="input-username" class="form-label">Your name:</label>
+                                    <input id="input-username" type="text" class="form-control" placeholder="Your name">
+                                </div>
+                                <div class="mb-3 d-grid">
+                                    <button id="btn-join" type="button" class="btn btn-primary">Join conference</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toasts" class="toast-container position-absolute p-3 top-0 end-0"></div>
+
+    <script id="user-template" type="text/x-jsrender">
+        <div id="user-{{:participantId}}-container" class="user-container">
+            <div class="text-center video-container {{:color}}">
+                <img src="{{:avatarUrl}}">
+            </div>
+            <p class="text-center participant-name">{{:name}}</p>
+        </div>
+    </script>
+
+    <script id="toast-template" type="text/x-jsrender">
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <div class="bd-placeholder-img rounded me-2"></div>
+                <strong class="me-auto">{{:title}}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">{{:message}}</div>
+        </div>
+    </script>
+
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+        integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"
+        integrity="sha512-0bEtK0USNd96MnO4XhH8jhv3nyRF0eK87pJke6pkYf3cM0uDIhNJy9ltuzqgypoIFXw3JSuiy04tVk4AjpZdZw=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.2/js/bootstrap.min.js"
+        integrity="sha512-HSNvqjhsAxRPvbSBEdXWlkR9uYmJtUvXEyfAvUzlA0uS5SyFZMZdczgz8oPWTz2NUEBaXkIYL4kdrBJkP66jYA=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/1.0.11/jsrender.min.js"
+        integrity="sha512-bKlNlbTH3duwZ28zoqEhXui/yuaPuQVci6OAVu0zh2WfYbEKD39HszVR8byP4/L4YyBo3b5CGIY+4ldVN93uCg=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+    <script type="text/javascript" src="scripts/utils.js"></script>
+    <script type="text/javascript" src="scripts/modals.js"></script>
+    <script type="text/javascript" src="scripts/actions.js"></script>
+    <script type="text/javascript" src="scripts/videos.js"></script>
+    <script type="text/javascript" src="scripts/positions.js"></script>
+    <script type="text/javascript" src="scripts/script.js"></script>
+</body>
+</html>
