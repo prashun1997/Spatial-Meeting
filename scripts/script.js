@@ -138,7 +138,7 @@ var _privateZoneId;
  * Set the spatial scene.
  */
 const setSpatialEnvironment = async () => {
-    const scale   = { x: window.innerWidth / 1, y: window.innerHeight / 1, z: 1 };
+    const scale   = { x: window.innerWidth / 10, y: window.innerHeight / 10, z: 1 };
     const forward = { x: 0, y: -1, z: 0 };
     const up      = { x: 0, y: 0,  z: 1 };
     const right   = { x: 1, y: 0,  z: 0 };
