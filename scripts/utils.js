@@ -9,6 +9,8 @@ const avatars = [
     'wizard',
     'woman',
     'prashun',
+    'shubham',
+    'sangeeth',
 ];
 
 const getRandomAvatar = (name) => {
