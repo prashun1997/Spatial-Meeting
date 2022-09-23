@@ -158,6 +158,9 @@ const createPrivateZone = async () => {
     const privateZoneElement = document.getElementById('private-zone');
     privateZoneElement.classList.remove('hide');
 
+    const controlPanelElement = document.getElementById('control-panel');
+    controlPanelElement.classList.remove('hide');
+
     const privateZoneRect = privateZoneElement.getBoundingClientRect();
 
     const zoneSettings = {
@@ -451,12 +454,4 @@ $(function() {
         $('.hide-safari').remove();
     }
 
-    console.group('Dolby.io Spatial Audio Demo');
-    console.log('GitHub repository: https://github.com/dolbyio-samples/dolbyio-spatial-audio-demo-web');
-    console.log('The avatar images are made by:');
-    console.log('photo3idea_studio - https://www.flaticon.com/authors/photo3idea-studio');
-    console.log('Freepik - https://www.freepik.com');
-    console.log('Micro icons - https://www.flaticon.com/free-icons/micro');
-    console.log('https://www.flaticon.com');
-    console.groupEnd();
 });

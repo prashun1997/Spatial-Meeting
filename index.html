@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Spatial Teams Meeting</title>
     <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <script type="text/javascript" src="voxeet-sdk.js"></script>
     <script
         src="https://cdn.jsdelivr.net/npm/@dolbyio/comms-sdk-web-extensions@1.0.1/dist/voxeet-sdk-ext.js"
@@ -26,6 +27,13 @@
 
 <body>
     <main>
+        <div id = "control-panel" class="background-border-control-panel hide">
+            <button id="btn-unmute" type= "submit" class="btn-control"><i class="bi bi-mic-fill"></i></button>
+            <button id="btn-mute" type= "button" class="btn-control"><i class="bi bi-mic-mute-fill"></i></button>
+            <button id="btn-video-on" type= "button" class="btn-control"><i class="bi bi-camera-video-fill"></i></button>
+            <button  id="btn-video-off" type= "button" class="btn-control"><i class="bi bi-camera-video-off-fill"></i></button>
+            <button  id="btn-exit" type= "button" class="btn-control"><i class="bi bi-x-circle-fill"></i> Leave Meeting</button>
+        </div>
         <div id="private-zone" class="background-border-private-zone hide">
             <p>
                 Private zone<br/>
@@ -41,7 +49,7 @@
     <div class="overlay"></div>
 
         <button id="btn-settings" class="btn btn-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-            <img src="images/settings.png" />
+            <img src="images/setting.png" />
         </button>
 
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
@@ -52,35 +60,27 @@
             <div class="offcanvas-body">
                 <div class="d-grid gap-2">
                     <button id="btn-invitation" type="button" class="btn btn-success">Invite someone</button>
-                    <button id="btn-video-on" type="button" class="btn btn-primary d-none hide-for-demo">Video On</button>
-                    <button id="btn-video-off" type="button" class="btn btn-secondary d-none hide-for-demo">Video Off</button>
-                    <button id="btn-unmute" type="button" class="btn btn-primary d-none">Unmute</button>
-                    <button id="btn-mute" type="button" class="btn btn-secondary d-none">Mute</button>
-                </div>
-
-                <div class="d-grid gap-2 border-top mt-3">
-                    <button id="btn-exit" type="button" class="btn btn-danger">Exit</button>
                 </div>
 
                 <!-- Video Devices -->
                 <div class="d-grid gap-2 border-top mt-3 hide-for-demo">
                     <label for="video-devices" class="col-form-label">Video Devices:</label>
                     <select id="video-devices" class="custom-select"></select>
-                    <button id="btn-set-video-device" class="btn btn-info" type="button" disabled>Set</button>
+                    <button id="btn-set-video-device" class="btn btn-dark" type="button" disabled>Set</button>
                 </div>
         
                 <!-- Input Audio Devices -->
                 <div class="d-grid gap-2 border-top mt-3">
                     <label for="input-audio-devices" class="col-form-label">Input Audio Devices:</label>
                     <select id="input-audio-devices" class="custom-select"></select>
-                    <button id="btn-set-input-audio-device" class="btn btn-info" type="button" disabled>Set</button>
+                    <button id="btn-set-input-audio-device" class="btn btn-dark" type="button" disabled>Set</button>
                 </div>
         
                 <!-- Output Audio Devices -->
                 <div class="d-grid gap-2 border-top mt-3 hide-safari">
                     <label for="output-audio-devices" class="col-form-label">Output Audio Devices:</label>
                     <select id="output-audio-devices" class="custom-select"></select>
-                    <button id="btn-set-output-audio-device" class="btn btn-info" type="button" disabled>Set</button>
+                    <button id="btn-set-output-audio-device" class="btn btn-dark" type="button" disabled>Set</button>
                 </div>
             </div>
         </div>
@@ -128,7 +128,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Dolby.io Spatial Audio - Invitation</h5>
+                    <h5 class="modal-title">Spatial Teams Meeting - Invitation</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -167,7 +167,7 @@
                                     Experience the Spatial Audio demo with a wired headset
                                 </div>
                                 <div class="mb-3" style="text-align: center;">
-                                    <img src="images/earphone.png" style="height: 96px;">
+                                    <img src="images/headphone.png" style="height: 96px;">
                                 </div>
 <!--                                 <div class="mb-3 d-grid">
                                     <button id="btn-demo" type="button" class="btn btn-primary">Join demo</button>

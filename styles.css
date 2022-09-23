@@ -1,6 +1,6 @@
 body {
     background-color: #2D1447;
-    background: linear-gradient(135deg, #3F338E 0%, #1C206B 100%);
+    background: linear-gradient(135deg, #2f2670 0%, #1b1d44 100%);
     min-height: 100vh;
     min-height: -webkit-fill-available;
 }
@@ -51,19 +51,20 @@ body > main {
 
 #spatialaudio-logo {
     position: absolute;
-    top: 10px;
-    left: 5px;
-    height: 100px;
+    top: 20px;
+    left: 50px;
+    height: 120x;
+    width: 120px;
 }
 
 .background-border-container-a,
 .background-border-container-b {
-    border-radius: 30px;
+    /* border-radius: 30px; */
     position: absolute;
 }
 
 .background-border-container-a {
-    border: 5px solid #863FD6;
+    border: 5px solid #050308;
     top: 40px;
     right: 100px;
     bottom: 80px;
@@ -71,7 +72,7 @@ body > main {
 }
 
 .background-border-container-b {
-    border: 5px solid #9f68dd;
+    border: 5px solid #050308;
     top: 80px;
     right: 140px;
     bottom: 40px;
@@ -85,14 +86,32 @@ body > main {
     height: 33%;
     width: 33%;
     background-color: rgba(255,255,255,.15);
-    border-radius: 20px;
-    border: 5px solid #863FD6;
+    border-radius: 10px;
+    border: 5px solid #050308;
     padding: 20px;
 
     -webkit-box-shadow: 15px 30px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 15px 30px rgba(0, 0, 0, 0.2);
     -o-box-shadow: 15px 30px rgba(0, 0, 0, 0.2);
     box-shadow: 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.background-border-control-panel {
+    position: absolute;
+    top: 4px;
+    left: 42%;
+    height: 4%;
+    width: 20%;
+    border-radius: 5px;
+    /* background-color: white; */
+    padding-left: 5px;
+}
+
+.btn-control{
+    border: none; 
+    color: black; 
+    padding: 8px 16px;
+    font-size: 16px;
 }
 
 .hide {

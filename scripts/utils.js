@@ -8,13 +8,17 @@ const avatars = [
     'vr-glasses',
     'wizard',
     'woman',
+];
+
+const people = [
     'prashun',
     'shubham',
     'sangeeth',
 ];
 
 const getRandomAvatar = (name) => {
-    if(avatars.indexOf(name) > 1)
+    name= name.toLowerCase();
+    if(people.indexOf(name) > -1)
     return `images/${name}.png`
     const image = avatars[Math.floor(Math.random() * avatars.length)];
     return `images/${image}.png`;
